@@ -8,6 +8,14 @@ const UserSchema = new mongoose.Schema({
         required: true,
         lowercase: true
     },
+    fullName: {
+        type: String,
+        required: true
+    },
+    profilePicture: {
+        type: String,
+        default: ''
+    },
     username: {
         type: String,
         required: true,
@@ -17,9 +25,44 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minlength: 6,
     },
+    address: {
+        type: String,
+        default: ''
+    },
+    contact: {
+        type: String,
+        default: ''
+    },
+    status: {
+        type: String,
+        default: 'active'
+    },
     createdAt: {
         type: Date,
         default: Date.now()
+    },
+    previouslyRented: {
+        type: Array,
+        default: []
+    },
+    currentlyRented: {
+        type: Array,
+        default: []
+    },
+    cardDetails: {
+        type: Object,
+        cardType: String,
+        cardNumber: String,
+        expDate: String,
+        cvv: String,
+        cardHolderName:String,
+        default: {
+            cardType: '',
+            cardNumber: '',
+            expDate: '',
+            cvv: '',
+            cardHolderName: '',
+        }
     }
 })
 

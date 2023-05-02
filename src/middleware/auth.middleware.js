@@ -10,6 +10,5 @@ exports.isAuthenticated = async (req, res, next) => {
 
     const decoded = jwt.verify(token, 'pixelssoft2022')
     req.user = await UserModel.findById(decoded.id)
-
     next()
 }

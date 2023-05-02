@@ -1,6 +1,7 @@
 const { createUser, loginUser, changePassword } = require('../controllers/user.controller')
 const express = require('express')
 const {isAuthenticated} = require('../middleware/auth.middleware')
+const upload = require('../config/multer.config')
 
 const router = express.Router()
 

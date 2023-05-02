@@ -5,12 +5,15 @@ const ErrorResponse = require('../utils/error-response.util')
 // Create user
 exports.createUser = async (req, res, next) => {
     try {
-        let user = new UserModel({
-            username: 'saadullahkh',
-            email: 'test@test.com',
-            password: 'test@123'
-        })
 
+        const { email, username } = req.body
+
+        let alreadyExists = await UserModel.findOne({ email, username })
+        if(alreadyExists) {
+            return res.status(400).json(new CustomResponse(null, 'User already exists', false))
+        }
+
+        let user = new UserModel(req.body)
         await user.save()
         res.status(200).json(new CustomResponse(user, 'user created'))
     } catch (err) {
