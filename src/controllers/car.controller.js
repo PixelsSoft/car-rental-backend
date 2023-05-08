@@ -3,11 +3,14 @@ const ErrorResponse = require('../utils/error-response.util')
 const CustomResponse = require('../utils/custom-response.util')
 
 exports.addCar = async (req, res, next) => {
+    const {pricePerDay, pricePerWeek, pricePerMonth} = req.body
     try {  
 
         if (!req.body.name || !req.body.registrationNo) return res.status(400).json(new CustomResponse(null, 'Name & Registration No. is required', false))
         const images = req.files.map(file => file.filename)
-        let car = new Car({...req.body, images})
+        let car = new Car({...req.body, images, price: {
+            pricePerDay, pricePerWeek, pricePerMonth
+        }})
         await car.save()
         res.status(201).json(new CustomResponse(car, 'New car added', true))
     } catch (err) {

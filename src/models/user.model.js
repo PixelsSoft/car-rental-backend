@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    role: {
+        type: String,
+        default: "user",
+    },
     contact: {
         type: String,
         default: ''
@@ -55,7 +59,7 @@ const UserSchema = new mongoose.Schema({
         cardNumber: String,
         expDate: String,
         cvv: String,
-        cardHolderName:String,
+        cardHolderName: String,
         default: {
             cardType: '',
             cardNumber: '',
@@ -67,15 +71,15 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.pre('save', async function (next) {
-    
-    if(!this.isModified("password")) {
+
+    if (!this.isModified("password")) {
         next()
     }
     this.password = await bcrypt.hash(this.password, 10)
 })
 
 UserSchema.methods.generateJwtToken = function () {
-    return jwt.sign({id: this._id.toString()}, 'pixelssoft2022', {expiresIn: '24h'})
+    return jwt.sign({ id: this._id.toString() }, 'pixelssoft2022', { expiresIn: '24h' })
 }
 
 UserSchema.methods.comparePassword = async function (password) {

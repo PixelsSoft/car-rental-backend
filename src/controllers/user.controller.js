@@ -5,10 +5,9 @@ const ErrorResponse = require('../utils/error-response.util')
 // Create user
 exports.createUser = async (req, res, next) => {
     try {
+        const { email } = req.body
 
-        const { email, username } = req.body
-
-        let alreadyExists = await UserModel.findOne({ email, username })
+        let alreadyExists = await UserModel.findOne({ email })
         if(alreadyExists) {
             return res.status(400).json(new CustomResponse(null, 'User already exists', false))
         }
@@ -24,17 +23,18 @@ exports.createUser = async (req, res, next) => {
 // Login User
 exports.loginUser = async (req, res, next) => {
     try {
-        const { username, password } = req.body
+        console.log('req')
+        const { email, password } = req.body
 
-        if (!username || !password) {
-            return res.status(400).json(new ErrorResponse(null, 'Username and password are required'))
+        if (!email || !password) {
+            return res.status(400).json(new CustomResponse(null, 'email and password are required', false))
         }
 
-        const user = await UserModel.findOne({ username }).select('+password')
-        if (!user) return res.status(404).json(new ErrorResponse(null, 'Invalid username/password'))
+        const user = await UserModel.findOne({ email }).select('+password')
+        if (!user) return res.status(404).json(new CustomResponse(null, 'Invalid email/password', false))
 
         const isPasswordValid = await user.comparePassword(password)
-        if (!isPasswordValid) return res.status(400).json(new ErrorResponse(null, 'Invalid username/password'))
+        if (!isPasswordValid) return res.status(400).json(new CustomResponse(null, 'Invalid username/password', false))
 
         const token = user.generateJwtToken()
 
@@ -47,10 +47,37 @@ exports.loginUser = async (req, res, next) => {
 // change password
 exports.changePassword = async (req, res) => {
     try {
-        const user = await UserModel.findOne({ username: req.user.username })
-        user.password = req.body.password
+        req.user.password = req.body.password
         await user.save()
         res.status(201).json(new CustomResponse(user, 'Password changed successfully'))
+    } catch (err) {
+        res.status(500).json(new ErrorResponse(err.stack))
+    }
+}
+
+exports.editProfileById = async (req, res) => {
+    try {
+        const userFound = await UserModel.findById(req.user._id)
+        if(!userFound) return res.status(404).json(new CustomResponse(null, 'No User found', false))
+
+
+        const {email} = req.body
+
+        let isEmailFound = await UserModel.findOne({email})
+        console.log('EMAIL FOUND')
+        if(isEmailFound) return res.status(400).json(new CustomResponse(null, 'Email already exists', false))
+        
+        let user = await UserModel.findOneAndUpdate({_id: req.user._id}, req.body, {new: true})
+        res.status(201).json(new CustomResponse(user, 'User updated'))
+    } catch (err) {
+        res.status(500).json(new ErrorResponse(err.stack))
+    }
+}
+
+exports.getUserProfile = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.user._id)
+        res.status(200).json(new CustomResponse(user))
     } catch (err) {
         res.status(500).json(new ErrorResponse(err.stack))
     }

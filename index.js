@@ -1,5 +1,6 @@
 const express = require('express')
-const PORT = 8001
+const cors = require('cors')
+const PORT = process.env.PORT || 8001
 const connectDb = require('./src/config/db.config')
 
 //Endpoints:
@@ -11,6 +12,7 @@ const app = express()
 connectDb()
 
 app.use(express.json())
+app.use(cors())
 
 app.use(userRoutes)
 app.use(carRoutes)
