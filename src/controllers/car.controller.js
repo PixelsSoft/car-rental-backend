@@ -3,6 +3,7 @@ const ErrorResponse = require('../utils/error-response.util')
 const CustomResponse = require('../utils/custom-response.util')
 
 exports.addCar = async (req, res, next) => {
+    console.log('hello')
     const {pricePerDay, pricePerWeek, pricePerMonth} = req.body
     try {  
 
@@ -12,10 +13,12 @@ exports.addCar = async (req, res, next) => {
               url: `${req.protocol}://${req.get("host")}/uploads/${file.filename}`,
             };
           });
+          console.log('hello2')
         let car = new Car({...req.body, images, price: {
             pricePerDay, pricePerWeek, pricePerMonth
         }})
         await car.save()
+        console.log('hello3')
         res.status(201).json(new CustomResponse(car, 'New car added', true))
     } catch (err) {
         res.status(500).json(new ErrorResponse(err.stack))
