@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <style>
+      * {
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tfoot td {
+        border-top: 2px solid #000;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Invoice #{{ invoiceNumber }}</h1>
+    <p>Dear {{ customerName }},</p>
+    <p>Thank you for using our services!</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Vehicle</th>
+          <th>Days</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+        <tr>
+          <td>{{ this.item.name }}</td>
+          <td>{{ this.days }}</td>
+          <td>{{ this.price }}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Total:</td>
+          <td>{{ total }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
+</html>

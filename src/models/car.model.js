@@ -11,6 +11,13 @@ const CarSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    type: {
+        type: String,
+    },
+    capacity: {
+        type: Number,
+        default: 0
+    },
     location: {
         type: String,
         default: ''
@@ -19,7 +26,7 @@ const CarSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    images: [{type: String}],
+    images: [{ type: String }],
     features: [
         {
             iconImg: String,
@@ -53,12 +60,12 @@ const CarSchema = new mongoose.Schema({
 })
 
 
-CarSchema.pre('remove', function(next) {
+CarSchema.pre('remove', function (next) {
     let imagesPaths = this.images.map(image => path.join(__dirname, '..', '..', 'uploads', image))
 
     imagesPaths.forEach(imagePath => {
         fs.unlink(imagePath, err => {
-            if(err) console.log(err)
+            if (err) console.log(err)
         })
     })
 

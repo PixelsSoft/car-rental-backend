@@ -7,6 +7,7 @@ const connectDb = require('./src/config/db.config')
 const userRoutes = require('./src/routes/user.routes')
 const carRoutes = require('./src/routes/car.routes')
 const bookingRoutes = require('./src/routes/booking.routes')
+const invoiceRoutes = require('./src/routes/invoice.routes')
 
 const app = express()
 connectDb()
@@ -17,6 +18,7 @@ app.use(cors())
 app.use(userRoutes)
 app.use(carRoutes)
 app.use(bookingRoutes)
+app.use(invoiceRoutes)
 
 app.listen(PORT, () => {
     console.log('Server started on port: ' + PORT)
