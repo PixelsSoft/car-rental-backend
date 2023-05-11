@@ -13,13 +13,7 @@ const app = express()
 connectDb()
 
 app.use(express.json())
-app.use(cors())
-
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(cors({ origin: ['http://localhost:3000', 'http://car-rental-app-dashboard.netlify.app', 'https://car-rental-app-dashboard.netlify.app'], credentials: true }))
 
 app.use(userRoutes)
 app.use(carRoutes)
