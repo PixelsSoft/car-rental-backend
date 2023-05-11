@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
-const connectionString = 'mongodb+srv://pixelssoftdev:pixels2022@cluster0.k9er7jy.mongodb.net/?retryWrites=true&w=majority'
+const connectionString = process.env.MONGO_CONNECTION_STRING
 
 const connectDb = async () => {
     try {
-        let connection = await mongoose.connect(connectionString, { dbName: 'car-rental-app' })
+        let connection = await mongoose.connect(connectionString, { dbName: process.env.DB_NAME })
         if (connection) {
             console.log('DB connected')
         } else {

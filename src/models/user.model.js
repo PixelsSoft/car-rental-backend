@@ -79,7 +79,7 @@ UserSchema.pre('save', async function (next) {
 })
 
 UserSchema.methods.generateJwtToken = function () {
-    return jwt.sign({ id: this._id.toString() }, 'pixelssoft2022', { expiresIn: '24h' })
+    return jwt.sign({ id: this._id.toString() }, process.env.JWT_SECRET, { expiresIn: '24h' })
 }
 
 UserSchema.methods.comparePassword = async function (password) {

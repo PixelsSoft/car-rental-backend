@@ -8,7 +8,7 @@ exports.isAuthenticated = async (req, res, next) => {
         error: 'Unauthorized access. Please login.'
     })
 
-    const decoded = jwt.verify(token, 'pixelssoft2022')
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
     req.user = await UserModel.findById(decoded.id)
     next()
 }

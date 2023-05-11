@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const PORT = process.env.PORT || 8001
 const connectDb = require('./src/config/db.config')
@@ -15,7 +16,7 @@ app.use(express.json())
 
 app.use(function(req, res, next) {
     // res.header("Access-Control-Allow-Origin", "*");
-    const allowedOrigins = ['http://localhost:3000', 'http://gamebrag.onrender.com', 'https://gamebrag.onrender.com'];
+    const allowedOrigins = ['http://localhost:3000', 'http://car-rental-app-dashboard.netlify.app', 'https://car-rental-app-dashboard.netlify.app/'];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
          res.setHeader('Access-Control-Allow-Origin', origin);
