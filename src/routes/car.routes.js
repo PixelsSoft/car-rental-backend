@@ -16,7 +16,6 @@ router.get('/cars/:id', fetchSingleCarDetails)
 router.post('/cars/add', upload.array('images'), addCar)
 
 router.patch('/cars/:id', editCarDetailsById)
-
 router.delete('/cars/:id', deleteCarById)
 
 module.exports = router
