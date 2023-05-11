@@ -15,6 +15,7 @@ connectDb()
 app.use(express.json())
 app.use(cors({ origin: ['http://localhost:3000', 'http://car-rental-app-dashboard.netlify.app', 'https://car-rental-app-dashboard.netlify.app'], credentials: true }))
 
+app.use('/uploads', express.static('uploads'));
 app.use(userRoutes)
 app.use(carRoutes)
 app.use(bookingRoutes)

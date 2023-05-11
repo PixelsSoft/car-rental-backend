@@ -7,7 +7,11 @@ exports.addCar = async (req, res, next) => {
     try {  
 
         if (!req.body.name || !req.body.registrationNo) return res.status(400).json(new CustomResponse(null, 'Name & Registration No. is required', false))
-        const images = req.files.map(file => file.filename)
+        const images = req.files.map((file) => {
+            return {
+              url: `${req.protocol}://${req.get("host")}/uploads/${file.filename}`,
+            };
+          });
         let car = new Car({...req.body, images, price: {
             pricePerDay, pricePerWeek, pricePerMonth
         }})
