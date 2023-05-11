@@ -3,7 +3,7 @@ const fs = require('fs')
 const handlebars = require('handlebars')
 const path = require('path')
 
-const sendgridApiKey = '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'
+const sendgridApiKey = process.env.SENDGRIDKEY
 
 sendgrid.setApiKey(sendgridApiKey)
 
