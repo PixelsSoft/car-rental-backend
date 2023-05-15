@@ -5,7 +5,7 @@ const upload = require('../config/multer.config')
 
 const router = express.Router()
 
-router.get('/auth/get-profile', getUserProfile)
+router.get('/auth/get-profile', isAuthenticated, getUserProfile)
 router.post('/auth/create', createUser)
 router.post('/auth/login', loginUser)
 router.put('/auth/change-password', isAuthenticated, changePassword)

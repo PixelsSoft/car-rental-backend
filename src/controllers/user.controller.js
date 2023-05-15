@@ -47,9 +47,10 @@ exports.loginUser = async (req, res, next) => {
 // change password
 exports.changePassword = async (req, res) => {
     try {
+        console.log(req.body)
         req.user.password = req.body.password
-        await user.save()
-        res.status(201).json(new CustomResponse(user, 'Password changed successfully'))
+        await req.user.save()
+        res.status(201).json(new CustomResponse(null, 'Password changed successfully'))
     } catch (err) {
         res.status(500).json(new ErrorResponse(err.stack))
     }
@@ -64,9 +65,13 @@ exports.editProfileById = async (req, res) => {
         const {email} = req.body
 
         let isEmailFound = await UserModel.findOne({email})
-        console.log('EMAIL FOUND')
-        if(isEmailFound) return res.status(400).json(new CustomResponse(null, 'Email already exists', false))
         
+        if(req.user.email === email) {
+            let user = await UserModel.findOneAndUpdate({_id: req.user._id}, req.body, {new: true})
+            return res.status(201).json(new CustomResponse(user, 'User updated'))
+        } 
+
+        if(isEmailFound) return res.status(400).json(new CustomResponse(null, 'Email already exists', false))
         let user = await UserModel.findOneAndUpdate({_id: req.user._id}, req.body, {new: true})
         res.status(201).json(new CustomResponse(user, 'User updated'))
     } catch (err) {
