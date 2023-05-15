@@ -8,6 +8,7 @@ const userRoutes = require('./src/routes/user.routes')
 const carRoutes = require('./src/routes/car.routes')
 const bookingRoutes = require('./src/routes/booking.routes')
 const invoiceRoutes = require('./src/routes/invoice.routes')
+const expenseRoutes = require('./src/routes/expense.routes')
 
 const app = express()
 connectDb()
@@ -23,7 +24,7 @@ app.use(function(req, res, next) {
     // }
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     res.header("Access-Control-Allow-credentials", true);
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE, PATCH");
     next();
   });
 
@@ -31,6 +32,7 @@ app.use(userRoutes)
 app.use(carRoutes)
 app.use(bookingRoutes)
 app.use(invoiceRoutes)
+app.use(expenseRoutes)
 
 app.use('/uploads', express.static('uploads'));
 
