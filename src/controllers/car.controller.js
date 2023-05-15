@@ -77,8 +77,7 @@ exports.editCarDetailsById = async (req, res, next) => {
 
 exports.getTotalRegisteredCars = async(req, res) => {
     try {
-        console.log('hello')
-        const total = await Car.find({}).countDocuments()
+        const total = await Car.countDocuments({})
         res.status(200).json(new CustomResponse(total))
     } catch (err) {
         console.log(err.stack)
