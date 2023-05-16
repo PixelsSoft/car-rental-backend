@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const path = require('path')
+const fs = require('fs')
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -13,8 +15,8 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     profilePicture: {
-        type: String,
-        default: ''
+        url: String,
+        filename: String
     },
     username: {
         type: String,
@@ -76,6 +78,15 @@ UserSchema.pre('save', async function (next) {
         next()
     }
     this.password = await bcrypt.hash(this.password, 10)
+})
+
+UserSchema.pre('remove', function (next) {
+    let imagePath = path.join(__dirname, '..','..', 'uploads', this.profilePicture.filename)
+    fs.unlink(imagePath, err => {
+        if(err) console.log(err)
+    })
+
+    next()
 })
 
 UserSchema.methods.generateJwtToken = function () {

@@ -1,14 +1,15 @@
 const UserModel = require('../models/user.model')
 const CustomResponse = require('../utils/custom-response.util')
 const ErrorResponse = require('../utils/error-response.util')
-
+const path = require('path')
+const fs = require('fs')
 // Create user
 exports.createUser = async (req, res, next) => {
     try {
         const { email } = req.body
 
         let alreadyExists = await UserModel.findOne({ email })
-        if(alreadyExists) {
+        if (alreadyExists) {
             return res.status(400).json(new CustomResponse(null, 'User already exists', false))
         }
 
@@ -57,23 +58,34 @@ exports.changePassword = async (req, res) => {
 }
 
 exports.editProfileById = async (req, res) => {
+    console.log(req.file)
     try {
         const userFound = await UserModel.findById(req.user._id)
-        if(!userFound) return res.status(404).json(new CustomResponse(null, 'No User found', false))
+        if (!userFound) return res.status(404).json(new CustomResponse(null, 'No User found', false))
 
+        const foundUserWithSameEmail = await UserModel.findOne({ email: req.body.email })
 
-        const {email} = req.body
+        if (foundUserWithSameEmail && foundUserWithSameEmail.email !== req.user.email) {
+            return res.status(400).json(new CustomResponse(null, 'Email already exists', false))
+        } else {
+            if (req.body.email) req.user.email = req.body.email
+        }
 
-        let isEmailFound = await UserModel.findOne({email})
-        
-        if(req.user.email === email) {
-            let user = await UserModel.findOneAndUpdate({_id: req.user._id}, req.body, {new: true})
-            return res.status(201).json(new CustomResponse(user, 'User updated'))
-        } 
+        if (req.body.fullName) req.user.fullName = req.body.fullName
+        if (req.file) {
+            if (req.user.profilePicture.filename) {
+                let imagePath = path.join(__dirname, '..', '..', 'uploads', req.user.profilePicture.filename)
+                fs.unlink(imagePath, err => {
+                    if (err) console.log(err)
+                })
+            }
+            req.user.profilePicture.filename = req.file.filename
+            req.user.profilePicture.url = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
+        }
 
-        if(isEmailFound) return res.status(400).json(new CustomResponse(null, 'Email already exists', false))
-        let user = await UserModel.findOneAndUpdate({_id: req.user._id}, req.body, {new: true})
-        res.status(201).json(new CustomResponse(user, 'User updated'))
+        await req.user.save()
+
+        res.status(200).json(new CustomResponse(null, 'Update successfully'))
     } catch (err) {
         res.status(500).json(new ErrorResponse(err.stack))
     }

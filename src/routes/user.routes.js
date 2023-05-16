@@ -9,6 +9,6 @@ router.get('/auth/get-profile', isAuthenticated, getUserProfile)
 router.post('/auth/create', createUser)
 router.post('/auth/login', loginUser)
 router.put('/auth/change-password', isAuthenticated, changePassword)
-router.patch('/auth/edit-profile', isAuthenticated, editProfileById)
+router.patch('/auth/edit-profile', upload.single('profileImage'), isAuthenticated, editProfileById)
 
 module.exports = router;
