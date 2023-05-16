@@ -8,12 +8,8 @@ const sendgridApiKey = process.env.SENDGRIDKEY
 sendgrid.setApiKey(sendgridApiKey)
 
 const sendEmail = (emailDetails) => {
-    console.log('hello')
     const invoiceTemplate = fs.readFileSync(path.join(__dirname, 'invoice.hbs'), 'utf-8')
-    console.log('INV TEMP: ', invoiceTemplate)
     const compiledInvoiceTemplate = handlebars.compile(invoiceTemplate)
-
-    console.log(compiledInvoiceTemplate)
 
     const {invoiceNumber, customerName, customerEmail, items, total, dueDate, invoiceDate} = emailDetails
     const mesg = {
