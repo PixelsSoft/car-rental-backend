@@ -4,7 +4,8 @@ const {
     fetchSingleCarDetails,
     deleteCarById,
     editCarDetailsById,
-    getTotalRegisteredCars
+    getTotalRegisteredCars,
+    getRecentlyAddedCars
 } = require('../controllers/car.controller')
 const upload = require('../config/multer.config')
 
@@ -14,6 +15,7 @@ const router = express.Router()
 router.get('/cars', fetchAllCars)
 router.get('/cars/:id', fetchSingleCarDetails)
 router.get('/cars-total', getTotalRegisteredCars)
+router.get('/recent-cars', getRecentlyAddedCars)
 
 router.post('/cars/add', upload.array('images'), addCar)
 

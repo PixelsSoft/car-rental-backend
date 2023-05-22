@@ -84,3 +84,14 @@ exports.getTotalRegisteredCars = async(req, res) => {
         res.status(500).json(new ErrorResponse(err))
     }
 }
+
+
+exports.getRecentlyAddedCars = async (req, res) => {
+    try {
+        const recentCars = await Car.find().sort({ _id: -1 }).limit(5);
+        res.status(200).json(new CustomResponse(recentCars))
+    } catch (err) {
+        console.log(err.stack)
+        res.status(500).json(new ErrorResponse(err))
+    }
+}
