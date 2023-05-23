@@ -5,7 +5,14 @@ const customerSchema = new mongoose.Schema({
     lastName: String,
     email: String,
     phone: String,
-    customer: String
+    customer: String,
+    address: String,
+    IdNumber: String,
+    status: {
+        type: String,
+        enum: ['Active', 'Deactivated'],
+        default: 'Active'
+    }
 })
 
 

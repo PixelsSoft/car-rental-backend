@@ -62,3 +62,13 @@ exports.updateExpense = async (req, res) => {
         res.status(500).json(new ErrorResponse(err.stack))
     }
 }
+
+exports.getRecentExpenses = async (req, res) => {
+    try {
+        const recentExpenses = await Expense.find().sort({ _id: -1 }).limit(5);
+        res.status(200).json(new CustomResponse(recentExpenses))
+    } catch (err) {
+        console.log(err.stack)
+        res.status(500).json(new ErrorResponse(err))
+    }
+}
