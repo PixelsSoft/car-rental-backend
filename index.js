@@ -9,6 +9,7 @@ const carRoutes = require('./src/routes/car.routes')
 const bookingRoutes = require('./src/routes/booking.routes')
 const invoiceRoutes = require('./src/routes/invoice.routes')
 const expenseRoutes = require('./src/routes/expense.routes')
+const customerRoutes = require('./src/routes/customer.routes')
 
 const app = express()
 connectDb()
@@ -33,6 +34,7 @@ app.use(carRoutes)
 app.use(bookingRoutes)
 app.use(invoiceRoutes)
 app.use(expenseRoutes)
+app.use(customerRoutes)
 
 app.use('/uploads', express.static('uploads'));
 
