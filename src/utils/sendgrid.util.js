@@ -26,6 +26,7 @@ const sendEmail = (emailDetails) => {
     total,
     dueDate,
     invoiceDate,
+    notes,
   } = emailDetails
 
   console.log(items[0])
@@ -41,6 +42,7 @@ const sendEmail = (emailDetails) => {
       dueDate,
       items,
       total,
+      notes,
     }),
   }
 
