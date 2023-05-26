@@ -87,3 +87,35 @@ exports.getTotalAmount = async (req, res) => {
     res.status(500).json(new ErrorResponse(err))
   }
 }
+
+exports.getTotalInflow = async (req, res) => {
+  try {
+    const invoiceAmounts = await Invoice.aggregate([
+      {
+        $group: {
+          _id: { $month: { $dateFromString: { dateString: '$invoiceDate' } } },
+          totalAmount: { $sum: '$total' },
+        },
+      },
+      {
+        $project: {
+          month: '$_id',
+          totalAmount: 1,
+          _id: 0,
+        },
+      },
+    ])
+
+    const monthsArray = Array.from({ length: 12 }, (_, i) => i + 1)
+
+    // Iterate over the monthsArray and check if a document exists for that month in invoiceAmounts
+    const result = monthsArray.map((month) => {
+      const invoice = invoiceAmounts.find((item) => item.month === month)
+      return { month, totalAmount: invoice ? invoice.totalAmount : 0 }
+    })
+
+    res.status(200).json(new CustomResponse(result))
+  } catch (err) {
+    res.status(500).json(new ErrorResponse(err))
+  }
+}

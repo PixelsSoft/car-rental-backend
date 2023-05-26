@@ -1,13 +1,15 @@
 const mongoose = require('mongoose')
 
 const expenseSchema = new mongoose.Schema({
-    title: String,
-    type: String,
-    amount: Number,
-    description: String,
-    date: String
+  vendor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Vendor',
+  },
+  type: String,
+  amount: Number,
+  description: String,
+  date: String,
 })
-
 
 const Expense = mongoose.model('Expense', expenseSchema)
 

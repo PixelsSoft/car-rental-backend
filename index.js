@@ -10,6 +10,7 @@ const bookingRoutes = require('./src/routes/booking.routes')
 const invoiceRoutes = require('./src/routes/invoice.routes')
 const expenseRoutes = require('./src/routes/expense.routes')
 const customerRoutes = require('./src/routes/customer.routes')
+const vendorRoutes = require('./src/routes/vendor.routes')
 
 const app = express()
 connectDb()
@@ -41,6 +42,7 @@ app.use(bookingRoutes)
 app.use(invoiceRoutes)
 app.use(expenseRoutes)
 app.use(customerRoutes)
+app.use(vendorRoutes)
 
 app.use('/uploads', express.static('uploads'))
 
