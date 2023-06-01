@@ -15,7 +15,7 @@ exports.createInvoice = async (req, res) => {
     notes,
   } = req.body
   try {
-    const invoice = await Invoice({
+    const invoice = await Invoice.create({
       invoiceNo: invoiceNumber,
       customerName: customerName,
       customerEmail: customerEmail,
@@ -25,6 +25,8 @@ exports.createInvoice = async (req, res) => {
       total: total,
       notes,
     })
+
+    invoice.amountDue = total
     await invoice.save()
     sendEmail({
       invoiceNumber,

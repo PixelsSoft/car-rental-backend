@@ -35,10 +35,20 @@ const invoiceSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  amountDue: {
+    type: Number,
+    default: 0,
+  },
   notes: {
     type: String,
     default: '',
   },
+  transactionHistory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'TransactionHistory',
+    },
+  ],
 })
 
 const Invoice = mongoose.model('Invoice', invoiceSchema)
