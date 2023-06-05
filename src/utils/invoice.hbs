@@ -54,7 +54,7 @@
 
         <div style='text-align: end;'>
           <strong>Amount Due (USD): </strong>
-          <span>$0</span>
+          <span>${{total}}</span>
         </div>
       </div>
     </div>
@@ -82,17 +82,9 @@
           <td>${{total}}</td>
         </tr>
         <tr>
-          <td style='text-align: end;'>Total paid on
-            {{invoiceDate}}
-            by cash:
-          </td>
-          <td />
-          <td>${{total}}</td>
-        </tr>
-        <tr>
           <td style='text-align: end;'>Amount Due (USD):</td>
           <td />
-          <td>$0.00</td>
+          <td>${{total}}</td>
         </tr>
       </tfoot>
     </table>

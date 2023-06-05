@@ -18,3 +18,20 @@ exports.getAllVendors = async (req, res) => {
     res.status(500).json(new ErrorResponse(err))
   }
 }
+
+exports.deleteVendorById = async (req, res) => {
+  try {
+    const id = req.params.id
+
+    const vendor = await Vendor.findById({ _id: id })
+
+    if (!vendor)
+      return res.status(404).json(new CustomResponse(null, 'Not found', false))
+
+    await vendor.deleteOne()
+
+    res.status(201).json(new CustomResponse(null, 'Vendor deleted'))
+  } catch (err) {
+    res.status(500).json(new ErrorResponse(err))
+  }
+}

@@ -47,7 +47,27 @@ exports.createInvoice = async (req, res) => {
 
 exports.getAllInvoices = async (req, res) => {
   try {
-    const invoices = await Invoice.find({})
+    const { customer, status, invoiceNumber, from, to } = req.query
+    let query = {}
+
+    if (customer) {
+      query.customerName = customer
+    }
+    if (status) {
+      query.status = status.toLowerCase()
+    }
+
+    if (invoiceNumber) {
+      query.invoiceNo = invoiceNumber
+    }
+    if (from && to) {
+      query.invoiceDate = {
+        $gte: from,
+        $lte: to,
+      }
+    }
+
+    const invoices = await Invoice.find(query)
     res.status(200).json(new CustomResponse(invoices))
   } catch (err) {
     res.status(500).json(new ErrorResponse(err))
