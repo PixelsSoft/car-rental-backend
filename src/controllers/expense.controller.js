@@ -5,6 +5,7 @@ const ErrorResponse = require('../utils/error-response.util')
 exports.addExpense = async (req, res) => {
   try {
     const expense = new Expense(req.body)
+    expense.amountDue = req.body.amount
     await expense.save()
     res.status(200).json(new CustomResponse(expense, 'Expense added'))
   } catch (err) {
@@ -14,8 +15,16 @@ exports.addExpense = async (req, res) => {
 
 exports.getExpenses = async (req, res) => {
   try {
-    const expenses = await Expense.find({}).populate('vendor')
+    const { from, to } = req.query
+    const query = {}
 
+    if (from && to) {
+      query.date = {
+        $gte: from,
+        $lte: to,
+      }
+    }
+    const expenses = await Expense.find(query).populate('vendor')
     res.status(200).json(new CustomResponse(expenses))
   } catch (err) {
     res.status(500).json(new ErrorResponse(err.stack))
@@ -105,6 +114,40 @@ exports.getMonthlyOutflow = async (req, res) => {
     res.status(200).json(new CustomResponse(result))
   } catch (err) {
     console.log(err.stack)
+    res.status(500).json(new ErrorResponse(err))
+  }
+}
+
+exports.recordExpensePayment = async (req, res) => {
+  try {
+    const id = req.params.id
+    const { date, amount, paymentMethod, paymentAccount, memo } = req.body
+    const expense = await Expense.findById({ _id: id })
+
+    if (!expense)
+      return res.status(404).json(new CustomResponse(null, 'Not found', false))
+
+    if (amount >= expense.amount) {
+      expense.amountDue = 0
+    } else {
+      expense.amountDue = expense.amountDue - amount
+    }
+
+    if (expense.amountDue <= 0) {
+      expense.status = 'paid'
+    }
+
+    expense.transactionHistory.push({
+      date,
+      amount,
+      paymentMethod,
+      paymentAccount,
+      memo,
+    })
+
+    await expense.save()
+    res.status(201).json(new CustomResponse(null, 'Success'))
+  } catch (err) {
     res.status(500).json(new ErrorResponse(err))
   }
 }

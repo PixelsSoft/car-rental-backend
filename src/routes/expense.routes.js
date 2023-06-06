@@ -7,11 +7,14 @@ const {
   updateExpense,
   getTotalExpenseAmount,
   getMonthlyOutflow,
+  recordExpensePayment,
 } = require('../controllers/expense.controller')
 
 const router = express.Router()
 
 router.post('/expenses/add', addExpense)
+router.post('/expenses/record/:id', recordExpensePayment)
+
 router.get('/expenses', getExpenses)
 router.get('/expense-total', getTotalExpenseAmount)
 router.get('/recent-expenses', getRecentExpenses)
