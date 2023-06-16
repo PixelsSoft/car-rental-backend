@@ -27,7 +27,10 @@ const invoiceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Car',
       },
-      days: Number,
+      days: {
+        type: Number,
+        default: 0,
+      },
       price: Number,
     },
   ],

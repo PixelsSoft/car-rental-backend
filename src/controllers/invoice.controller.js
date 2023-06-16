@@ -90,7 +90,6 @@ exports.deleteInvoiceById = async (req, res) => {
 
 exports.getInvoiceHistoryByCarId = async (req, res) => {
   try {
-    console.log('HELLO')
     const id = req.params.id
 
     const invoices = await Invoice.find({ 'items.item': id })
@@ -138,6 +137,44 @@ exports.getTotalInflow = async (req, res) => {
 
     res.status(200).json(new CustomResponse(result))
   } catch (err) {
+    res.status(500).json(new ErrorResponse(err))
+  }
+}
+
+exports.getInvoiceByID = async (req, res) => {
+  try {
+    const id = req.params.id
+
+    const invoice = await Invoice.findById(id)
+      .populate({
+        path: 'transactionHistory',
+        populate: {
+          path: 'paymentAccount',
+          model: 'PaymentAccount',
+        },
+      })
+      .populate({
+        path: 'transactionHistory',
+        populate: {
+          path: 'paymentMethod',
+          model: 'PaymentMethod',
+        },
+      })
+      .populate({
+        path: 'items',
+        populate: {
+          path: 'item',
+          model: 'Car',
+        },
+      })
+      .exec()
+
+    if (!invoice)
+      return res.status(404).json(new CustomResponse(null, 'Not found'))
+
+    res.status(200).json(new CustomResponse(invoice))
+  } catch (err) {
+    console.log(err)
     res.status(500).json(new ErrorResponse(err))
   }
 }
