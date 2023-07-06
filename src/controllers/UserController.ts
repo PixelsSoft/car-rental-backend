@@ -3,6 +3,7 @@ import User, { IUserWithMethods } from "../models/User";
 import ErrorHandler from "../helpers/ErrorHandler";
 import sendEmail from "../helpers/SendEmail";
 import * as crypto from "crypto";
+import sendToken from "../helpers/sendToken";
 
 export const createUser = AsyncHandler(async (req, res, next) => {
   const { fullName, email, password, confirmPassword } = req.body;
@@ -172,12 +173,7 @@ export const login = AsyncHandler(async (req, res, next) => {
   if (user.isVerified === false)
     return next(new ErrorHandler("Please verify your email", 400));
 
-  const token = user.generateJwtToken();
-  res.status(200).json({
-    success: true,
-    user,
-    token,
-  });
+  sendToken(user, 200, res);
 });
 
 export const changePassword = AsyncHandler(async (req, res, next) => {});
