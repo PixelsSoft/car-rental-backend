@@ -16,6 +16,13 @@ export const createUser = AsyncHandler(async (req, res, next) => {
     password,
   })) as IUserWithMethods;
 
+  if (req.file) {
+    user.profilePic.url = `${req.protocol}://${req.get("host")}/uploads/${
+      req.file.filename
+    }`;
+    user.profilePic.path = req.file.filename;
+  }
+
   const verificationToken = user.getEmailVerificationToken();
 
   await user.save({ validateBeforeSave: false });
@@ -143,6 +150,34 @@ export const resetPassword = AsyncHandler(async (req, res, next) => {
   });
 });
 
-export const changePassword = AsyncHandler(async (req, res, next) => {});
+export const login = AsyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
 
-export const login = AsyncHandler(async (req, res, next) => {});
+  //Check if email and password is entered by user:
+  if (!email || !password) {
+    return next(new ErrorHandler("Please enter email and password", 400));
+  }
+
+  //Find user in database:
+  const user = (await User.findOne({ email }).select(
+    "+password"
+  )) as IUserWithMethods;
+  if (!user) return next(new ErrorHandler("Invalid Email/Password", 401));
+
+  //Check if password is correct:
+  const isPasswordValid = await user.comparePassword(password);
+  if (!isPasswordValid)
+    return next(new ErrorHandler("Invalid Email/Password", 401));
+
+  if (user.isVerified === false)
+    return next(new ErrorHandler("Please verify your email", 400));
+
+  const token = user.generateJwtToken();
+  res.status(200).json({
+    success: true,
+    user,
+    token,
+  });
+});
+
+export const changePassword = AsyncHandler(async (req, res, next) => {});

@@ -20,6 +20,7 @@ import UserRoutes from "./routes/UserRoutes";
 import errorMiddleware from "./middlewares/ErrorMiddleware";
 
 app.use("/api/v1/", UserRoutes);
+app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 
 app.listen(PORT, () => console.log("Server running on port: " + PORT));
