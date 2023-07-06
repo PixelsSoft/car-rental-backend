@@ -6,6 +6,7 @@ import {
   forgetPassword,
   resetPassword,
   verifyEmail,
+  logoutUser,
 } from "../controllers/UserController";
 import upload from "../helpers/upload";
 
@@ -19,5 +20,7 @@ Router.post("/users/change-password", changePassword);
 
 Router.put("/password/reset/:token", resetPassword);
 Router.put("/email/verify/:token", verifyEmail);
+
+Router.get("/logout", logoutUser);
 
 export default Router;
