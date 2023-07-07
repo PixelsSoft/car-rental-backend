@@ -18,10 +18,17 @@ app.use(cors());
 app.use(cookieParser());
 
 // routes
-import UserRoutes from "./routes/UserRoutes";
+import users from "./routes/UserRoutes";
+import customers from "./routes/CustomerRoutes";
+import invoices from "./routes/InvoiceRoutes";
+import items from "./routes/ItemRoutes";
+
 import errorMiddleware from "./middlewares/ErrorMiddleware";
 
-app.use("/api/v1/", UserRoutes);
+app.use("/api/v1/", users);
+app.use("/api/v1", customers);
+app.use("/api/v1", invoices);
+app.use("/api/v1", items);
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 

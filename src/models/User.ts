@@ -30,50 +30,49 @@ export interface IUserWithMethods extends IUser {
   getEmailVerificationToken(): string;
 }
 
-const UserSchema = new mongoose.Schema<IUser, IUserWithMethods>({
-  fullName: {
-    type: String,
-    required: [true, "Name is required"],
-  },
-  role: {
-    type: String,
-    default: "user",
-  },
-  profilePic: {
-    url: {
+const UserSchema = new mongoose.Schema<IUser, IUserWithMethods>(
+  {
+    fullName: {
       type: String,
-      default:
-        "https://miro.medium.com/v2/resize:fit:720/1*_ARzR7F_fff_KI14yMKBzw.png",
+      required: [true, "Name is required"],
     },
-    path: {
+    role: {
       type: String,
-      default: "",
+      default: "user",
     },
+    profilePic: {
+      url: {
+        type: String,
+        default:
+          "https://miro.medium.com/v2/resize:fit:720/1*_ARzR7F_fff_KI14yMKBzw.png",
+      },
+      path: {
+        type: String,
+        default: "",
+      },
+    },
+    email: {
+      type: String,
+      required: [true, "email is required"],
+      unique: [true, "email already exists"],
+      validate: [validator.isEmail, "Wrong email address"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [6, "Password should be minimum 6 characters long"],
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    emailVerificationToken: String,
+    emailVerificationExpire: Date,
   },
-  email: {
-    type: String,
-    required: [true, "email is required"],
-    unique: [true, "email already exists"],
-    validate: [validator.isEmail, "Wrong email address"],
-  },
-  password: {
-    type: String,
-    required: [true, "Password is required"],
-    minlength: [6, "Password should be minimum 6 characters long"],
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-  emailVerificationToken: String,
-  emailVerificationExpire: Date,
-  _createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-});
+  { timestamps: true }
+);
 
 UserSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) next();
