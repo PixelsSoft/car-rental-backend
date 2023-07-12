@@ -1,7 +1,7 @@
 import AsyncHandler from "../helpers/AsyncHandler";
 import User, { IUserWithMethods } from "../models/User";
 import ErrorHandler from "../helpers/ErrorHandler";
-import sendEmail from "../helpers/SendEmail";
+import { sendMail } from "../helpers/SendEmail";
 import * as crypto from "crypto";
 import sendToken from "../helpers/sendToken";
 
@@ -35,7 +35,7 @@ export const createUser = AsyncHandler(async (req, res, next) => {
   const message = `Your Email verification token is as follows:\n\n${verificationUrl}\n\nIf you did not create account then ignore it.`;
 
   try {
-    await sendEmail({
+    await sendMail({
       email: user.email as string,
       subject: "Xpress Rental - Email Verification",
       message,
@@ -100,7 +100,7 @@ export const forgetPassword = AsyncHandler(async (req, res, next) => {
   const message = `Your password reset token is as follows:\n\n${resetUrl}\n\nIf you have not requested password change then ignore it.`;
 
   try {
-    await sendEmail({
+    await sendMail({
       email: user.email as string,
       subject: "Xpress Rental - Password recovery",
       message,

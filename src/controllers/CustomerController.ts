@@ -14,7 +14,7 @@ export const createCustomer = AsyncHandler(async (req, res, next) => {
 });
 
 export const getCustomers = AsyncHandler(async (req, res, next) => {
-  const customers = await Customer.find({});
+  const customers = await Customer.find({}).populate("invoices");
   res.status(200).json({
     success: true,
     customers,
@@ -35,6 +35,7 @@ export const getCustomerProfile = AsyncHandler(async (req, res, next) => {
 
 export const deleteCustomer = AsyncHandler(async (req, res, next) => {
   const id = req.params.id;
+  console.log(id);
   const customer = await Customer.findById(id);
 
   if (!customer) return next(new ErrorHandler("Customer not found", 404));

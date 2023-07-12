@@ -6,11 +6,12 @@ import {
   deleteItem,
   createItem,
 } from "../controllers/ItemController";
+import upload from "../helpers/upload";
 
 const Router = express.Router();
 
-Router.post("/items/create", createItem);
-Router.put("/items/edit/:id", editItem);
+Router.post("/items/create", upload.array("images", 10), createItem);
+Router.put("/items/edit/:id", upload.array("images", 10), editItem);
 
 Router.get("/items", getItems);
 Router.get("/items/details/:id", getItemById);

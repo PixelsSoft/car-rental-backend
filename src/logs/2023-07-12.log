@@ -1,0 +1,37 @@
+2023-07-12T09:12:06.033Z info: Database connection established
+2023-07-12T09:25:19.717Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Item"
+2023-07-12T09:25:19.721Z error: STACK: 
+2023-07-12T09:25:28.902Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Item"
+2023-07-12T09:25:28.904Z error: STACK: 
+2023-07-12T09:25:36.837Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Item"
+2023-07-12T09:25:36.837Z error: STACK: 
+2023-07-12T09:25:36.841Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Item"
+2023-07-12T09:25:36.843Z error: STACK: 
+2023-07-12T11:31:07.783Z error: Customer validation failed: name: Name is required
+2023-07-12T11:31:07.785Z error: STACK: 
+2023-07-12T11:32:20.278Z info: Database connection established
+2023-07-12T11:32:53.974Z info: Database connection established
+2023-07-12T11:36:45.671Z error: Customer validation failed: name: Name is required
+2023-07-12T11:36:45.677Z error: STACK: 
+2023-07-12T11:37:18.197Z error: Customer validation failed: name: Name is required
+2023-07-12T11:37:18.198Z error: STACK: 
+2023-07-12T11:37:45.869Z error: Customer validation failed: name: Name is required
+2023-07-12T11:37:45.869Z error: STACK: 
+2023-07-12T11:38:19.349Z error: Customer validation failed: name: Name is required
+2023-07-12T11:38:19.349Z error: STACK: 
+2023-07-12T11:38:58.804Z error: Customer validation failed: name: Name is required
+2023-07-12T11:38:58.805Z error: STACK: 
+2023-07-12T11:43:48.126Z error: Customer validation failed: name: Name is required
+2023-07-12T11:43:48.127Z error: STACK: 
+2023-07-12T11:44:40.474Z info: Database connection established
+2023-07-12T11:46:39.028Z error: Customer validation failed: name: Customer field is required
+2023-07-12T11:46:39.031Z error: STACK: 
+2023-07-12T11:46:39.272Z error: Customer validation failed: name: Customer field is required
+2023-07-12T11:46:39.273Z error: STACK: 
+2023-07-12T12:00:06.388Z info: Database connection established
+2023-07-12T13:33:06.972Z info: Database connection established
+2023-07-12T14:55:27.133Z error: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "Customer"
+2023-07-12T14:55:27.138Z error: STACK: 
+2023-07-12T14:56:49.467Z info: Database connection established
+2023-07-12T14:56:54.902Z error: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "Customer"
+2023-07-12T14:56:54.906Z error: STACK: 

@@ -36,7 +36,7 @@ const itemSchema = new mongoose.Schema(
           type: String,
           default: "",
         },
-        path: {
+        filename: {
           type: String,
           default: "",
         },

@@ -54,7 +54,7 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
 });
 
 export const getInvoices = AsyncHandler(async (req, res, next) => {
-  const invoices = await Invoice.find({});
+  const invoices = await Invoice.find({}).populate("customer", "_id name");
   res.status(200).json({
     success: true,
     invoices,
@@ -126,6 +126,58 @@ export const editInvoice = AsyncHandler(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: "invoice updated successfully",
+  });
+});
+
+export const getTotalOverdues = AsyncHandler(async (req, res, next) => {
+  const invoices = await Invoice.find({ status: "overdue" });
+  let total = invoices.reduce((acc, inv) => {
+    return acc + inv.amountDue;
+  }, 0);
+
+  res.status(200).json({
+    success: true,
+    overdue: total,
+  });
+});
+
+export const dueWithin30Days = AsyncHandler(async (req, res, next) => {
+  const currentDate = new Date();
+  const thirtyDaysFromNow = new Date();
+  thirtyDaysFromNow.setDate(currentDate.getDate() + 30);
+
+  const invoices = await Invoice.find({
+    dueAt: {
+      $gte: currentDate,
+      $lte: thirtyDaysFromNow,
+    },
+  });
+
+  let total = invoices.reduce((acc, inv) => acc + inv.amountDue, 0);
+
+  res.status(200).json({
+    success: true,
+    amountDue: total,
+  });
+});
+
+export const upcomingPayouts = AsyncHandler(async (req, res, next) => {
+  const invoices = await Invoice.find({ status: "due" });
+  let total = invoices.reduce((acc, inv) => {
+    return acc + inv.amountDue;
+  }, 0);
+
+  res.status(200).json({
+    success: true,
+    upcoming_payouts: total,
+  });
+});
+
+export const getUnpaidInvoices = AsyncHandler(async (req, res, next) => {
+  const invoices = await Invoice.find({ status: "due" });
+  res.status(200).json({
+    success: true,
+    invoices,
   });
 });
 
