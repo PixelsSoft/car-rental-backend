@@ -22,13 +22,21 @@ import users from "./routes/UserRoutes";
 import customers from "./routes/CustomerRoutes";
 import invoices from "./routes/InvoiceRoutes";
 import items from "./routes/ItemRoutes";
-
+import recurringInvoices from "./routes/RecurringInvoicsRoutes";
+import paymentMethods from "./routes/PaymentMethodRoutes";
+import paymentAccounts from "./routes/PaymentAccountsRoutes";
+import paymentRecords from "./routes/PaymentRecordRoutes";
 import errorMiddleware from "./middlewares/ErrorMiddleware";
 
 app.use("/api/v1/", users);
 app.use("/api/v1", customers);
 app.use("/api/v1", invoices);
 app.use("/api/v1", items);
+app.use("/api/v1", recurringInvoices);
+app.use("/api/v1", paymentMethods);
+app.use("/api/v1", paymentAccounts);
+app.use("/api/v1", paymentRecords);
+
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 

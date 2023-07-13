@@ -29,6 +29,14 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  isRecurring: {
+    type: Boolean,
+    default: false,
+  },
+  nextInvoice: {
+    type: Number,
+    default: 0,
+  },
   status: {
     type: String,
     enum: [
@@ -48,10 +56,19 @@ const InvoiceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customer",
   },
+
+  paymentRecords: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "PaymentRecord" },
+  ],
+
   items: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Item",
+      listItem: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Item",
+      },
+      quantity: { type: String, default: 1 },
+      price: { type: Number, default: 0 },
     },
   ],
 });

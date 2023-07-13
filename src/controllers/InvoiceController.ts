@@ -4,17 +4,19 @@ import AsyncHandler from "../helpers/AsyncHandler";
 import ErrorHandler from "../helpers/ErrorHandler";
 import formatInvoiceNumber from "../helpers/FormatInvoiceNumber";
 import Item from "../models/Item";
+import RecurringInvoice from "../models/RecurringInvoice";
 
 export const createInvoice = AsyncHandler(async (req, res, next) => {
   const {
     PoSoNumber,
-    createdAt,
     dueAt,
     total,
     amountDue,
     notes,
     customer,
     items,
+    isRecurring,
+    nextInvoice,
   } = req.body;
 
   const invoiceCustomer = await Customer.findById(customer);
@@ -25,16 +27,30 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
   const invoice = await Invoice.create({
     invoiceNumber,
     PoSoNumber,
-    createdAt,
-    dueAt,
+    dueAt: dueAt ? dueAt : new Date(),
     total,
     amountDue,
     notes,
     customer,
     items,
+    isRecurring,
+    nextInvoice,
   });
 
-  const result = await Item.find({ _id: { $in: items } });
+  if (isRecurring) {
+    const recurringInvoice = await RecurringInvoice.create({
+      status: "active",
+      customer,
+      amount: total,
+    });
+
+    recurringInvoice.invoices.push(invoice._id);
+    await recurringInvoice.save();
+  }
+
+  const listItemIds = items.map((item: any) => item.listItem);
+
+  const result = await Item.find({ _id: { $in: listItemIds } });
 
   result.forEach(async (item) => {
     item.invoiceHistory.push(invoice._id);
@@ -80,7 +96,11 @@ export const getInvoiceNumber = async () => {
 export const getSingleInvoiceDetails = AsyncHandler(async (req, res, next) => {
   const id = req.params.id;
 
-  const invoice = await Invoice.findById(id);
+  const invoice = await Invoice.findById(id)
+    .populate("customer")
+    .populate("paymentRecords")
+    .populate("items.listItem");
+
   if (!invoice) return next(new ErrorHandler("Invoice not found", 404));
 
   res.status(200).json({
