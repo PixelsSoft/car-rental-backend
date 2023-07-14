@@ -52,10 +52,10 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
 
   const result = await Item.find({ _id: { $in: listItemIds } });
 
-  result.forEach(async (item) => {
+  for (const item of result) {
     item.invoiceHistory.push(invoice._id);
     await item.save();
-  });
+  }
 
   invoiceCustomer.invoices.push(invoice._id);
   await invoiceCustomer.save();
@@ -130,6 +130,8 @@ export const deleteInvoice = AsyncHandler(async (req, res, next) => {
 
 export const editInvoice = AsyncHandler(async (req, res, next) => {
   const { id } = req.params;
+
+  console.log(id);
 
   const invoice = await Invoice.findById(id);
 

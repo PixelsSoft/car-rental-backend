@@ -26,6 +26,11 @@ import recurringInvoices from "./routes/RecurringInvoicsRoutes";
 import paymentMethods from "./routes/PaymentMethodRoutes";
 import paymentAccounts from "./routes/PaymentAccountsRoutes";
 import paymentRecords from "./routes/PaymentRecordRoutes";
+import vendors from "./routes/VendorsRoutes";
+import bills from "./routes/BillsRoutes";
+import billingItems from "./routes/BillingItem";
+import services from "./routes/ServiceRoutes";
+
 import errorMiddleware from "./middlewares/ErrorMiddleware";
 
 app.use("/api/v1/", users);
@@ -36,6 +41,10 @@ app.use("/api/v1", recurringInvoices);
 app.use("/api/v1", paymentMethods);
 app.use("/api/v1", paymentAccounts);
 app.use("/api/v1", paymentRecords);
+app.use("/api/v1", vendors);
+app.use("/api/v1", bills);
+app.use("/api/v1", billingItems);
+app.use("/api/v1", services);
 
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);

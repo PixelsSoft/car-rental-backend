@@ -1,0 +1,35 @@
+2023-07-13T21:31:38.878Z info: Database connection established
+2023-07-13T22:06:03.382Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Invoice"
+2023-07-13T22:06:03.390Z error: STACK: 
+2023-07-13T22:06:03.395Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Invoice"
+2023-07-13T22:06:03.396Z error: STACK: 
+2023-07-13T22:25:38.964Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Invoice"
+2023-07-13T22:25:38.966Z error: STACK: 
+2023-07-13T22:26:05.955Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Invoice"
+2023-07-13T22:26:05.956Z error: STACK: 
+2023-07-13T22:26:44.606Z error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Invoice"
+2023-07-13T22:26:44.614Z error: STACK: 
+2023-07-13T22:26:45.921Z info: Database connection established
+2023-07-13T23:18:05.083Z info: Database connection established
+2023-07-13T23:18:53.515Z info: Database connection established
+2023-07-13T23:21:28.287Z info: Database connection established
+2023-07-13T23:22:05.652Z info: Database connection established
+2023-07-13T23:29:22.172Z info: Database connection established
+2023-07-13T23:29:41.421Z info: Database connection established
+2023-07-13T23:30:22.279Z info: Database connection established
+2023-07-13T23:30:38.082Z info: Database connection established
+2023-07-13T23:31:03.792Z info: Database connection established
+2023-07-13T23:31:26.876Z info: Database connection established
+2023-07-13T23:32:17.121Z info: Database connection established
+2023-07-13T23:32:54.023Z info: Database connection established
+2023-07-13T23:33:43.227Z info: Database connection established
+2023-07-13T23:34:02.831Z info: Database connection established
+2023-07-13T23:34:48.235Z info: Database connection established
+2023-07-13T23:35:43.810Z info: Database connection established
+2023-07-13T23:36:15.264Z info: Database connection established
+2023-07-13T23:36:46.856Z info: Database connection established
+2023-07-13T23:37:10.902Z info: Database connection established
+2023-07-13T23:37:34.693Z info: Database connection established
+2023-07-13T23:38:45.020Z info: Database connection established
+2023-07-13T23:39:06.254Z info: Database connection established
+2023-07-13T23:39:27.154Z info: Database connection established

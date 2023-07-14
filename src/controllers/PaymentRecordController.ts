@@ -4,7 +4,6 @@ import Invoice from "../models/Invoice";
 import PaymentRecord from "../models/PaymentRecord";
 
 export const createPaymentRecord = AsyncHandler(async (req, res, next) => {
-  console.log("hello");
   const { invoice, amount, paymentAccount, paymentMethod } = req.body;
 
   const foundInvoice = await Invoice.findById(invoice._id);
@@ -25,16 +24,13 @@ export const createPaymentRecord = AsyncHandler(async (req, res, next) => {
   });
 
   if (amount >= foundInvoice.amountDue) {
-    console.log("if");
     foundInvoice.status = "paid";
     foundInvoice.amountDue = 0;
   } else {
-    console.log("else");
     foundInvoice.amountDue = foundInvoice.amountDue - amount;
   }
 
-  if (amount === foundInvoice.total * 0.5) {
-    console.log("if");
+  if (amount === foundInvoice.total / 2) {
     foundInvoice.status = "partial";
   }
 
