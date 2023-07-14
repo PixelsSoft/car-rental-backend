@@ -13,7 +13,7 @@ export const createBill = AsyncHandler(async (req, res, next) => {
 });
 
 export const getAllBills = AsyncHandler(async (req, res, next) => {
-  const Bills = await Bill.find({});
+  const Bills = await Bill.find({}).populate("vendor", "name");
   res.status(200).json({
     success: true,
     Bills,
@@ -60,8 +60,24 @@ export const deleteBill = AsyncHandler(async (req, res, next) => {
   if (!bill) return next(new ErrorHandler("bill not found", 404));
 
   await Vendor.updateMany({}, { $pull: { bills: id } }).exec();
+  await bill.deleteOne();
   res.status(200).json({
     success: true,
     message: "Bill deleted successfully",
+  });
+});
+
+export const getBillById = AsyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+
+  const bill = await Bill.findById(id)
+    .populate("vendor")
+    .populate("records")
+    .populate("items.listItem");
+  if (!bill) return next(new ErrorHandler("bill not found", 404));
+
+  res.status(200).json({
+    success: true,
+    bill,
   });
 });

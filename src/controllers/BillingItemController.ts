@@ -10,6 +10,7 @@ export const createBillingItem = AsyncHandler(async (req, res, next) => {
   res.status(201).json({
     success: true,
     item: newItem,
+    message: "Success",
   });
 });
 
@@ -58,6 +59,7 @@ export const updateBillingItem = AsyncHandler(async (req, res, next) => {
     res.status(200).json({
       success: true,
       updatedItem,
+      message: "Product updated",
     });
   } catch (error) {
     next(new ErrorHandler("Failed to update billing item", 500));

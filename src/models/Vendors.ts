@@ -5,7 +5,7 @@ const VendorsSchema = new mongoose.Schema({
     type: String,
     required: [true, "Vendor name is required"],
   },
-  email: {
+  description: {
     type: String,
     default: "",
   },

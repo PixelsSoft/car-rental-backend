@@ -5,7 +5,7 @@ import Service from "../models/Service";
 
 // Get all services
 export const getAllServices = AsyncHandler(async (req, res, next) => {
-  const services = await Service.find({});
+  const services = await Service.find({}).populate("item");
   res.status(200).json({
     success: true,
     services,

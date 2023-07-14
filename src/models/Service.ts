@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const ServiceSchema = new mongoose.Schema({
   item: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "item",
+    ref: "Item",
   },
   createdAt: {
     type: Date,

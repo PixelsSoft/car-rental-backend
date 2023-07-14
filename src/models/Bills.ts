@@ -8,12 +8,13 @@ const BillsSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["paid", "due", "overdue"],
+    default: "due",
   },
   date: {
     type: Date,
     default: new Date(),
   },
-  dueDate: {
+  dueAt: {
     type: Date,
     default: new Date(),
   },
@@ -26,11 +27,11 @@ const BillsSchema = new mongoose.Schema({
     default: "",
   },
   total: {
-    type: String,
+    type: Number,
     default: 0,
   },
   amountDue: {
-    type: String,
+    type: Number,
     default: 0,
   },
   items: [
@@ -51,6 +52,12 @@ const BillsSchema = new mongoose.Schema({
         type: String,
         default: "",
       },
+    },
+  ],
+  records: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BillRecord",
     },
   ],
 });

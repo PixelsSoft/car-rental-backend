@@ -30,6 +30,7 @@ import vendors from "./routes/VendorsRoutes";
 import bills from "./routes/BillsRoutes";
 import billingItems from "./routes/BillingItem";
 import services from "./routes/ServiceRoutes";
+import billRecords from "./routes/BillPaymentRecord";
 
 import errorMiddleware from "./middlewares/ErrorMiddleware";
 
@@ -45,6 +46,7 @@ app.use("/api/v1", vendors);
 app.use("/api/v1", bills);
 app.use("/api/v1", billingItems);
 app.use("/api/v1", services);
+app.use("/api/v1", billRecords);
 
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);

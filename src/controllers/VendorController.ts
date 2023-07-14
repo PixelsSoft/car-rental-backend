@@ -20,6 +20,17 @@ export const getAllVendors = AsyncHandler(async (req, res, next) => {
   });
 });
 
+export const getVendorById = AsyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const vendor = await Vendor.findById(id);
+
+  if (!vendor) return next(new ErrorHandler("Vendor not found", 404));
+  res.status(200).json({
+    success: true,
+    vendor,
+  });
+});
+
 export const editVendor = AsyncHandler(async (req, res, next) => {
   const { id } = req.params;
 

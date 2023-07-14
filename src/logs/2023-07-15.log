@@ -1,0 +1,32 @@
+2023-07-14T19:03:57.993Z info: Database connection established
+2023-07-14T19:04:14.193Z error: bill not found
+2023-07-14T19:04:14.199Z error: STACK: 
+2023-07-14T20:11:11.791Z info: Database connection established
+2023-07-14T20:24:59.589Z info: Database connection established
+2023-07-14T20:25:01.299Z error: Cannot populate path `items` because it is not in your schema. Set the `strictPopulate` option to false to override.
+2023-07-14T20:25:01.304Z error: STACK: 
+2023-07-14T20:25:04.046Z error: Cannot populate path `items` because it is not in your schema. Set the `strictPopulate` option to false to override.
+2023-07-14T20:25:04.047Z error: STACK: 
+2023-07-14T20:25:04.277Z error: Cannot populate path `items` because it is not in your schema. Set the `strictPopulate` option to false to override.
+2023-07-14T20:25:04.278Z error: STACK: 
+2023-07-14T20:25:09.630Z error: Cannot populate path `items` because it is not in your schema. Set the `strictPopulate` option to false to override.
+2023-07-14T20:25:09.631Z error: STACK: 
+2023-07-14T20:25:43.402Z error: Cannot populate path `items` because it is not in your schema. Set the `strictPopulate` option to false to override.
+2023-07-14T20:25:43.403Z error: STACK: 
+2023-07-14T20:25:43.636Z error: Cannot populate path `items` because it is not in your schema. Set the `strictPopulate` option to false to override.
+2023-07-14T20:25:43.639Z error: STACK: 
+2023-07-14T20:26:25.865Z info: Database connection established
+2023-07-14T20:26:28.385Z error: Schema hasn't been registered for model "item".
+Use mongoose.model(name, schema)
+2023-07-14T20:26:28.390Z error: STACK: 
+2023-07-14T20:26:28.610Z error: Schema hasn't been registered for model "item".
+Use mongoose.model(name, schema)
+2023-07-14T20:26:28.611Z error: STACK: 
+2023-07-14T20:27:19.449Z info: Database connection established
+2023-07-14T20:27:24.046Z error: Schema hasn't been registered for model "item".
+Use mongoose.model(name, schema)
+2023-07-14T20:27:24.051Z error: STACK: 
+2023-07-14T20:27:24.271Z error: Schema hasn't been registered for model "item".
+Use mongoose.model(name, schema)
+2023-07-14T20:27:24.272Z error: STACK: 
+2023-07-14T20:28:20.001Z info: Database connection established
