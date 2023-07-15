@@ -2,9 +2,11 @@ import AsyncHandler from "../helpers/AsyncHandler";
 import ErrorHandler from "../helpers/ErrorHandler";
 import Vendor from "../models/Vendors";
 import Bill from "../models/Bills";
+import formatInvoiceNumber from "../helpers/FormatInvoiceNumber";
 
 export const createBill = AsyncHandler(async (req, res, next) => {
-  const newBill = await Bill.create(req.body);
+  const billNumber = await getBillNumber();
+  const newBill = await Bill.create({ ...req.body, billNumber });
   res.status(201).json({
     success: true,
     Bill: newBill,
@@ -81,3 +83,19 @@ export const getBillById = AsyncHandler(async (req, res, next) => {
     bill,
   });
 });
+
+//helpers
+
+export const getBillNumber = async () => {
+  const lastBill = await Bill.findOne().sort({ billNumber: -1 }).exec();
+
+  let nextBillNumber = 1;
+
+  if (lastBill) {
+    const highestNumber = lastBill.billNumber;
+    nextBillNumber = parseInt(highestNumber) + 1;
+  }
+
+  const formattedInvoiceNumber = formatInvoiceNumber(nextBillNumber);
+  return formattedInvoiceNumber;
+};

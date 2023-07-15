@@ -61,8 +61,6 @@ export const deleteItem = AsyncHandler(async (req, res, next) => {
 export const editItem = AsyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  console.log(req.body);
-
   const item = await Item.findById(id);
 
   if (!item) return next(new ErrorHandler("item not found", 404));
