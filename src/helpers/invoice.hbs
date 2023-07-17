@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <style>
+      * { font-family: Arial, sans-serif; width: 100%; } body { width: 100%; }
+      table { border-collapse: collapse; width: 100%; margin-top: 10px; } th, td
+      { padding: 8px; text-align: center; } th { background-color: #FEBD20; }
+      tfoot td { font-weight: bold; } .header { width: 100%; display: flex;
+      flex-direction: row; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #ccc; padding-top: 10px; padding-bottom: 10px;}
+      .receipt-info { padding-top: 10px; padding-bottom: 10px; border-bottom:
+      1px solid #ccc; width: 100%; display: flex; align-items: center;}
+    </style>
+  </head>
+  <body>
+    <h1>Invoice #{{invoiceNumber}}</h1>
+    <p>Dear {{customerName}},</p>
+    <p>Thank you for using our services!</p>
+    <div class="header">
+      <img
+        src="https://xpress-rental.onrender.com/uploads/logo.png"
+        width="150px"
+        height="150px"
+        style="object-fit: contain;"
+      />
+      <div style="float:right !important; text-align:end">
+        <h1>INVOICE</h1>
+        <br />
+        <span>Xpress Car Rental</span>
+        <br />
+        <span>United States</span>
+      </div>
+    </div>
+
+    <div class="receipt-info">
+      <div>
+        <span>Bill To:</span>
+        <br />
+        <strong>{{customerName}}</strong>
+      </div>
+      <div>
+        <div style="text-align: end;">
+          <strong>Invoice Number: </strong>
+          <span>{{invoiceNumber}}</span>
+        </div>
+        <div style="text-align: end;">
+          <strong>Invoice Date: </strong>
+          <span>{{invoiceDate}}</span>
+        </div>
+
+        <div style="text-align: end;">
+          <strong>Pending Date: </strong>
+          <span>{{dueDate}}</span>
+        </div>
+
+        <div style="text-align: end;">
+          <strong>Amount Due (USD): </strong>
+          <span>${{total}}</span>
+        </div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Vehicle</th>
+          <th>Price</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+          <tr>
+            <td>{{this.item.listItem.make}}</td>
+            <td>${{multiply this.price this.quantity}}</td>
+            <td>${{multiply this.price this.quantity}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+      <tfoot style="border-top: 1px solid #ccc; border-bottom: 1px solid #ccc">
+        <tr>
+          <td style="text-align: end;">Total:</td>
+          <td />
+          <td>${{total}}</td>
+        </tr>
+        <tr>
+          <td style="text-align: end;">Amount Due (USD):</td>
+          <td />
+          <td>${{total}}</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div style="width: 50%;">
+      <div><strong>Notes: </strong></div>
+      <p style="white-space:pre-wrap;">{{notes}}</p>
+    </div>
+  </body>
+</html>

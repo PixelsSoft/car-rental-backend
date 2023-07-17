@@ -10,6 +10,10 @@ const BillsSchema = new mongoose.Schema({
     enum: ["paid", "due", "overdue"],
     default: "due",
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "ExpenseCategory",
+  },
   date: {
     type: Date,
     default: new Date(),

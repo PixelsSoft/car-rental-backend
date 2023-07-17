@@ -1,0 +1,71 @@
+2023-07-17T09:36:26.871Z info: Database connection established
+2023-07-17T09:43:34.930Z error: Invalid Email/Password
+2023-07-17T09:43:34.937Z error: STACK: 
+2023-07-17T09:44:43.127Z info: Database connection established
+2023-07-17T09:46:06.000Z info: Database connection established
+2023-07-17T09:47:37.150Z info: Database connection established
+2023-07-17T09:48:58.548Z info: Database connection established
+2023-07-17T09:55:40.407Z error: Invalid Email/Password
+2023-07-17T09:55:40.412Z error: STACK: 
+2023-07-17T09:56:24.404Z error: Invalid Email/Password
+2023-07-17T09:56:24.405Z error: STACK: 
+2023-07-17T09:57:23.960Z error: Invalid Email/Password
+2023-07-17T09:57:23.961Z error: STACK: 
+2023-07-17T09:58:58.019Z error: Please enter email and password
+2023-07-17T09:58:58.021Z error: STACK: 
+2023-07-17T09:59:05.249Z error: Invalid Email/Password
+2023-07-17T09:59:05.250Z error: STACK: 
+2023-07-17T11:02:23.010Z error: Invalid Email/Password
+2023-07-17T11:02:23.011Z error: STACK: 
+2023-07-17T11:04:11.695Z error: Please enter email and password
+2023-07-17T11:04:11.696Z error: STACK: 
+2023-07-17T12:12:27.375Z info: Database connection established
+2023-07-17T12:17:08.793Z info: Database connection established
+2023-07-17T12:18:39.253Z info: Database connection established
+2023-07-17T12:26:22.982Z info: Database connection established
+2023-07-17T12:28:37.848Z info: Database connection established
+2023-07-17T12:29:02.296Z info: Database connection established
+2023-07-17T12:32:14.691Z info: Database connection established
+2023-07-17T12:33:29.603Z info: Database connection established
+2023-07-17T12:34:00.935Z info: Database connection established
+2023-07-17T12:50:41.792Z info: Database connection established
+2023-07-17T12:51:19.719Z info: Database connection established
+2023-07-17T12:51:49.234Z info: Database connection established
+2023-07-17T13:30:31.504Z info: Database connection established
+2023-07-17T13:31:15.673Z info: Database connection established
+2023-07-17T13:33:31.450Z info: Database connection established
+2023-07-17T13:56:52.713Z info: Database connection established
+2023-07-17T14:30:32.774Z error: Invoice is already paid
+2023-07-17T14:30:32.778Z error: STACK: 
+2023-07-17T15:01:58.573Z info: Database connection established
+2023-07-17T15:02:20.908Z info: Database connection established
+2023-07-17T15:02:49.141Z info: Database connection established
+2023-07-17T15:03:47.748Z info: Database connection established
+2023-07-17T15:04:03.894Z info: Database connection established
+2023-07-17T15:04:24.371Z info: Database connection established
+2023-07-17T15:06:20.518Z info: Database connection established
+2023-07-17T15:13:21.230Z info: Database connection established
+2023-07-17T15:14:07.574Z info: Database connection established
+2023-07-17T15:28:20.506Z info: Database connection established
+2023-07-17T15:28:49.584Z info: Database connection established
+2023-07-17T15:29:25.318Z info: Database connection established
+2023-07-17T15:30:30.667Z info: Database connection established
+2023-07-17T15:31:02.420Z info: Database connection established
+2023-07-17T15:31:45.205Z info: Database connection established
+2023-07-17T15:49:21.330Z info: Database connection established
+2023-07-17T15:53:37.258Z info: Database connection established
+2023-07-17T17:07:05.563Z info: Database connection established
+2023-07-17T17:11:22.159Z info: Database connection established
+2023-07-17T17:11:41.358Z error: Missing helper: "multiply"
+2023-07-17T17:11:41.359Z error: STACK: 
+2023-07-17T17:14:23.455Z info: Database connection established
+2023-07-17T17:17:49.811Z info: Database connection established
+2023-07-17T17:19:53.283Z error: Operation `invoices.aggregate()` buffering timed out after 10000ms
+2023-07-17T17:19:53.287Z error: STACK: 
+2023-07-17T17:19:53.293Z error: Operation `invoices.aggregate()` buffering timed out after 10000ms
+2023-07-17T17:19:53.294Z error: STACK: 
+2023-07-17T17:19:53.297Z error: Operation `bills.find()` buffering timed out after 10000ms
+2023-07-17T17:19:53.297Z error: STACK: 
+2023-07-17T17:19:54.033Z info: Database connection established
+2023-07-17T17:21:12.105Z info: Database connection established
+2023-07-17T17:22:44.026Z info: Database connection established

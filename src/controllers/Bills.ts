@@ -3,10 +3,15 @@ import ErrorHandler from "../helpers/ErrorHandler";
 import Vendor from "../models/Vendors";
 import Bill from "../models/Bills";
 import formatInvoiceNumber from "../helpers/FormatInvoiceNumber";
+import ExpenseCategory from "../models/ExpenseCategory";
 
 export const createBill = AsyncHandler(async (req, res, next) => {
   const billNumber = await getBillNumber();
+
+  const foundCategory = await ExpenseCategory.findById(req.body.category);
   const newBill = await Bill.create({ ...req.body, billNumber });
+  foundCategory?.bills.push(newBill._id);
+  await foundCategory?.save();
   res.status(201).json({
     success: true,
     Bill: newBill,

@@ -5,6 +5,8 @@ import ErrorHandler from "../helpers/ErrorHandler";
 import formatInvoiceNumber from "../helpers/FormatInvoiceNumber";
 import Item from "../models/Item";
 import RecurringInvoice from "../models/RecurringInvoice";
+import Bill from "../models/Bills";
+import { sendInvoiceEmail } from "../helpers/SendEmail";
 
 export const createInvoice = AsyncHandler(async (req, res, next) => {
   const {
@@ -62,6 +64,17 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
 
   // TODO: have to implement send invoice to customer email
 
+  sendInvoiceEmail({
+    invoiceNumber,
+    customerName: invoiceCustomer.name as string,
+    customerEmail: invoiceCustomer.email,
+    items,
+    total,
+    dueDate: dueAt,
+    invoiceDate: invoice.createdAt,
+    notes,
+  });
+
   res.status(201).json({
     success: true,
     invoice,
@@ -70,7 +83,9 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
 });
 
 export const getInvoices = AsyncHandler(async (req, res, next) => {
-  const invoices = await Invoice.find({}).populate("customer", "_id name");
+  const invoices = await Invoice.find({})
+    .populate("customer", "_id name")
+    .populate("items.listItem");
   res.status(200).json({
     success: true,
     invoices,
@@ -203,6 +218,196 @@ export const getUnpaidInvoices = AsyncHandler(async (req, res, next) => {
   });
 });
 
-export const getInvoiceByCustomerId = AsyncHandler(
-  async (req, res, next) => {}
-);
+interface MonthlyInvoiceData {
+  _id: {
+    year: number;
+    month: number;
+  };
+  totalRevenue: number;
+}
+
+interface MonthlyBillData {
+  _id: {
+    year: number;
+    month: number;
+  };
+  totalExpenses: number;
+}
+
+export const getMonthwiseData = AsyncHandler(async (req, res, next) => {
+  const { year } = req.params;
+  const yearFilter = parseInt(year as string);
+
+  if (isNaN(yearFilter)) {
+    return next(new ErrorHandler("Invalid year query parameter", 400));
+  }
+
+  const invoiceData: MonthlyInvoiceData[] =
+    await Invoice.aggregate<MonthlyInvoiceData>([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(yearFilter, 0, 1), // Start of the year
+            $lte: new Date(yearFilter, 11, 31), // End of the year
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+          },
+          totalRevenue: { $sum: "$total" },
+        },
+      },
+    ]);
+
+  const billData: MonthlyBillData[] = await Bill.aggregate<MonthlyBillData>([
+    {
+      $match: {
+        date: {
+          $gte: new Date(yearFilter, 0, 1), // Start of the year
+          $lte: new Date(yearFilter, 11, 31), // End of the year
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          year: { $year: "$date" },
+          month: { $month: "$date" },
+        },
+        totalExpenses: { $sum: "$total" },
+      },
+    },
+  ]);
+
+  // Combine profits and expenses month-wise
+  const monthlyData: {
+    [year: number]: {
+      [month: number]: {
+        profit: number;
+        expense: number;
+      };
+    };
+  } = {};
+
+  // Initialize all months with profit and expense as 0 for the given year
+  if (!monthlyData[yearFilter]) {
+    monthlyData[yearFilter] = {};
+  }
+
+  for (let month = 1; month <= 12; month++) {
+    if (!monthlyData[yearFilter][month]) {
+      monthlyData[yearFilter][month] = {
+        profit: 0,
+        expense: 0,
+      };
+    }
+  }
+
+  invoiceData.forEach(({ _id, totalRevenue }) => {
+    const { month } = _id;
+    monthlyData[yearFilter][month].profit = totalRevenue;
+  });
+
+  billData.forEach(({ _id, totalExpenses }) => {
+    const { month } = _id;
+    monthlyData[yearFilter][month].expense = totalExpenses;
+  });
+
+  res.status(200).json({
+    success: true,
+    monthlyData,
+  });
+});
+
+export const getCashFlowData = AsyncHandler(async (req, res, next) => {
+  const { year } = req.params;
+  const yearFilter = parseInt(year as string);
+
+  if (isNaN(yearFilter)) {
+    return next(new ErrorHandler("Invalid year query parameter", 400));
+  }
+
+  const invoiceData: MonthlyInvoiceData[] =
+    await Invoice.aggregate<MonthlyInvoiceData>([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(yearFilter, 0, 1), // Start of the year
+            $lte: new Date(yearFilter, 11, 31), // End of the year
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+          },
+          totalRevenue: { $sum: "$amountDue" },
+        },
+      },
+    ]);
+
+  const billData: MonthlyBillData[] = await Bill.aggregate<MonthlyBillData>([
+    {
+      $match: {
+        date: {
+          $gte: new Date(yearFilter, 0, 1), // Start of the year
+          $lte: new Date(yearFilter, 11, 31), // End of the year
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          year: { $year: "$date" },
+          month: { $month: "$date" },
+        },
+        totalExpenses: { $sum: "$amountDue" },
+      },
+    },
+  ]);
+
+  // Combine profits and expenses month-wise
+  const monthlyData: {
+    [year: number]: {
+      [month: number]: {
+        profit: number;
+        expense: number;
+      };
+    };
+  } = {};
+
+  // Initialize all months with profit and expense as 0 for the given year
+  if (!monthlyData[yearFilter]) {
+    monthlyData[yearFilter] = {};
+  }
+
+  for (let month = 1; month <= 12; month++) {
+    if (!monthlyData[yearFilter][month]) {
+      monthlyData[yearFilter][month] = {
+        profit: 0,
+        expense: 0,
+      };
+    }
+  }
+
+  invoiceData.forEach(({ _id, totalRevenue }) => {
+    const { month } = _id;
+    monthlyData[yearFilter][month].profit = totalRevenue;
+  });
+
+  billData.forEach(({ _id, totalExpenses }) => {
+    const { month } = _id;
+    monthlyData[yearFilter][month].expense = totalExpenses;
+  });
+
+  res.status(200).json({
+    success: true,
+    data: monthlyData,
+  });
+});

@@ -4,6 +4,9 @@ import fs from "fs";
 import path from "path";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
+handlebars.registerHelper("multiply", function (a, b) {
+  return a * b;
+});
 
 type Options = {
   email: string;
@@ -52,7 +55,7 @@ const sendInvoiceEmail = (emailDetails: EmailDetails) => {
     notes,
   } = emailDetails;
 
-  console.log(items[0]);
+  console.log(emailDetails);
 
   const mesg = {
     to: customerEmail,

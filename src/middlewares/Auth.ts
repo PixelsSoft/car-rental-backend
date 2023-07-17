@@ -10,7 +10,7 @@ interface IAuthenticatedRequest extends Request {
 
 export const isAuthenticated = AsyncHandler(
   async (req: IAuthenticatedRequest, res, next) => {
-    const { token } = req.cookies;
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token)
       return next(new ErrorHandler("Login to access this resource.", 401));
