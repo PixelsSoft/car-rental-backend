@@ -22,9 +22,9 @@ const itemSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    registrationNumber: {
+    vinnumber: {
       type: String,
-      required: [true, "Registration number is required"],
+      required: [true, "Vin Number is required"],
     },
     description: {
       type: String,

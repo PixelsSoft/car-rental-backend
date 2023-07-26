@@ -8,11 +8,11 @@ const CustomerSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      default: "",
+      required: [true, "Customer field is required"],
     },
     lastName: {
       type: String,
-      default: "",
+      required: [true, "Customer field is required"],
     },
     email: {
       type: String,
@@ -30,6 +30,22 @@ const CustomerSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    address: {
+      type: String,
+      default: "",
+    },
+    drivinglicense: [
+      {
+        url: {
+          type: String,
+          default: "",
+        },
+        filename: {
+          type: String,
+          default: "",
+        },
+      },
+    ],
     invoices: [
       {
         type: mongoose.Schema.Types.ObjectId,

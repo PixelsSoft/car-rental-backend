@@ -5,6 +5,16 @@ import Invoice from "../models/Invoice";
 import Item from "../models/Item";
 
 export const createCustomer = AsyncHandler(async (req, res, next) => {
+  // drivinglicense file upload
+  let drivinglicense = [{ url: "", filename: "" }];
+  if (req.files) {
+    drivinglicense = (req.files as any).map((file: any) => {
+      return {
+        filename: file.filename,
+        url: `${req.protocol}://${req.get("host")}/uploads/${file.filename}`,
+      };
+    });
+  }
   const customer = await Customer.create(req.body);
   res.status(200).json({
     success: true,

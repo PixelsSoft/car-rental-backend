@@ -5,12 +5,8 @@ const ServiceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Item",
   },
-  createdAt: {
+  servicesDate: {
     type: Date,
-    default: new Date(),
-  },
-  returnDate: {
-    type: String,
     default: new Date(),
   },
   description: {
