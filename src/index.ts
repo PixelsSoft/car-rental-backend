@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import connectDb from "./config/db";
 
 dotenv.config();
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 8002;
 
 //connect to db
 connectDb();

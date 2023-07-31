@@ -13,6 +13,14 @@ const InvoiceSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  PickUpDate: {
+    type: Date,
+    default: new Date(),
+  },
+  DropOffDate: {
+    type: Date,
+    default: new Date(),
+  },
   dueAt: {
     type: Date,
     default: new Date(),

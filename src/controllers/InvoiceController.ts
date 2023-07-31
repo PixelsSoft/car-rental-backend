@@ -19,6 +19,8 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
     items,
     isRecurring,
     nextInvoice,
+    PickUpDate,
+    DropOffDate
   } = req.body;
 
   const invoiceCustomer = await Customer.findById(customer);
@@ -36,6 +38,8 @@ export const createInvoice = AsyncHandler(async (req, res, next) => {
     customer,
     items,
     isRecurring,
+    PickUpDate,
+    DropOffDate,
     nextInvoice,
   });
 
