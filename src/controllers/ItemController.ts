@@ -6,7 +6,6 @@ import Customer from "../models/Customer";
 
 export const createItem = AsyncHandler(async (req, res, next) => {
   let images = [{ url: "", filename: "" }];
-
   if (req.files) {
     images = (req.files as any).map((file: any) => {
       return {
